@@ -1,3 +1,7 @@
+## Code to generate inverse of Mmtrix and cache it
+
+## Function stores x matrix and calculates inverse of this matrix
+
 makeCacheMatrix <- function(x = matrix()) {
       m <- NULL
       set <- function(y) {
@@ -5,23 +9,25 @@ makeCacheMatrix <- function(x = matrix()) {
         m <<- NULL
       }
       get <- function() x
-      setinverse <- function(solve) m <<- solve
-      getinverse <- function() m
+      setsolve <- function(solve) m <<- solve
+      getsolve <- function() m
       list(set = set, get = get,
-           setinverse = setinverse,
-           getinverse = getinverse)
+           setsolve = setsolve,
+           getsolve = getsolve)
 }
 
 
+## This function is needed if we want to get inverse of the matrix from cache
+            
 cacheSolve <- function(x, ...) {
-      m <- x$getinverse()
+      m <- x$getsolve()
       if(!is.null(m)) {
        message("getting cached data")
         return(m)
       }
       data <- x$get()
       m <- solve(data, ...)
-      x$setinverse(m)
+      x$setsolve(m)
       m
 }
 
